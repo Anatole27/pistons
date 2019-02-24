@@ -20,16 +20,15 @@ import pistons.storage.SimpleMap;
 public class NoteDisplay extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private SimpleMap noteImagesMap; 
+	private SimpleMap noteImagesMap;
 
-	private KeySignature keySig;
 	private Vector<Note> noteSerie;
 
 	public NoteDisplay() {
 		noteImagesMap = new SimpleMap();
 		noteSerie = new Vector<Note>();
 
-		try {             
+		try {
 			populateImages();
 
 		} catch (IOException ex) {
@@ -39,9 +38,9 @@ public class NoteDisplay extends JPanel {
 
 	private void populateImages() throws IOException {
 		BufferedImage image = null;
-		File f = new File("/home/anatole/eclipse-workspace/pistons/img");
+		File f = new File("img");
 		String[] files = f.list();
-		for(String imgFilename:files) {
+		for (String imgFilename : files) {
 
 			Note note = new Note();
 
@@ -49,7 +48,7 @@ public class NoteDisplay extends JPanel {
 			image = ImageIO.read(new File(f.getAbsoluteFile() + "/" + imgFilename));
 
 			// Note name
-			switch(imgFilename.charAt(0)){
+			switch (imgFilename.charAt(0)) {
 			case 'a':
 				note.pitch.noteName = NoteName.LA;
 				break;
@@ -85,9 +84,9 @@ public class NoteDisplay extends JPanel {
 			int charIdx = 1;
 
 			// Alteration
-			if(imgFilename.charAt(1) == 'e' || imgFilename.charAt(1) == 'i') {
+			if (imgFilename.charAt(1) == 'e' || imgFilename.charAt(1) == 'i') {
 				charIdx = 3; // Next information at index 3
-				switch(imgFilename.charAt(1)) {
+				switch (imgFilename.charAt(1)) {
 				case 'e':
 					note.accidental = NoteAccidental.BEMOL;
 					break;
@@ -95,17 +94,16 @@ public class NoteDisplay extends JPanel {
 					note.accidental = NoteAccidental.DIESE;
 					break;
 				}
-			}
-			else {
+			} else {
 				note.accidental = NoteAccidental.BECARRE;
 			}
 
 			// Octave number
 			note.pitch.octaveNb = 2;
-			if(imgFilename.charAt(charIdx) == '\'') {
+			if (imgFilename.charAt(charIdx) == '_') {
 				note.pitch.octaveNb++;
 				charIdx++;
-				if(imgFilename.charAt(charIdx) == '\'') {
+				if (imgFilename.charAt(charIdx) == '_') {
 					note.pitch.octaveNb++;
 				}
 			}
@@ -117,14 +115,6 @@ public class NoteDisplay extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		//		Iterator<Note> noteIt = noteSerie.iterator();
-		//		while(noteIt.hasNext()) {
-		//			if(noteImagesMap.containsKey(noteIt.next()))
-		//			{
-		//				g.drawImage(noteImagesMap.get(noteSerie.get(0)), 0, 0, this); // see javadoc for more info on the parameters            
-		//			}
-		//		}
 
 		g.drawImage(noteImagesMap.get(noteSerie.get(0)), 0, 0, this); // see javadoc for more info on the parameters
 
@@ -141,15 +131,15 @@ public class NoteDisplay extends JPanel {
 	public void setNote(Note note) {
 		noteSerie.clear();
 		noteSerie.addElement(note.clone());
-		if(!noteImagesMap.containsKey(note)){
-			System.err.println(note.toString()+" is not in database");
+		if (!noteImagesMap.containsKey(note)) {
+			System.err.println(note.toString() + " is not in database");
 		}
 	}
 
 	public void setNoteSerie(Vector<Note> noteSerie) {
 		this.noteSerie.clear();
 		Iterator<Note> noteIt = noteSerie.iterator();
-		while(noteIt.hasNext()) {
+		while (noteIt.hasNext()) {
 			this.noteSerie.addElement(noteIt.next().clone());
 		}
 	}

@@ -1,27 +1,29 @@
 package pistons.listener;
 
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
 import pistons.instrument.PistonCombination;
 
-public class PistonListener implements KeyListener {
+public class PistonListener implements KeyEventDispatcher {
 
 	boolean combinationValidated = false;
 	PistonCombination pistonCombination = new PistonCombination();
-	
+
 	public PistonListener(JFrame frame) {
-		frame.addKeyListener(this);
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this);
 	}
-	
+
 	/**
 	 * Holds until validation key is hit
+	 * 
 	 * @param pistonCombination
 	 */
 	public void getPistonCombination(PistonCombination pistonCombination) {
-		while(!combinationValidated) {
+		while (!combinationValidated) {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
@@ -33,46 +35,42 @@ public class PistonListener implements KeyListener {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-	}
+	public boolean dispatchKeyEvent(final KeyEvent e) {
+		switch (e.getID()) {
+		case KeyEvent.KEY_PRESSED:
+			switch (e.getKeyChar()) {
+			case 'j':
+				pistonCombination.firstPiston = true;
+				break;
+			case 'k':
+				pistonCombination.secondPiston = true;
+				break;
+			case 'l':
+				pistonCombination.thirdPiston = true;
+				break;
+			case 'a':
+				combinationValidated = true;
+				break;
+			}
+			break;
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyChar()) {
-		case 'j':
-			pistonCombination.firstPiston = true;
-			break;
-		case 'k':
-			pistonCombination.secondPiston = true;
-			break;
-		case 'l':
-			pistonCombination.thirdPiston = true;
-			break;
-		case 'a':
-			combinationValidated = true;
+		case KeyEvent.KEY_RELEASED:
+			switch (e.getKeyChar()) {
+			case 'j':
+				pistonCombination.firstPiston = false;
+				break;
+			case 'k':
+				pistonCombination.secondPiston = false;
+				break;
+			case 'l':
+				pistonCombination.thirdPiston = false;
+				break;
+			case 'a':
+				combinationValidated = false;
+				break;
+			}
 			break;
 		}
-
+		return false;
 	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		switch(e.getKeyChar()) {
-		case 'j':
-			pistonCombination.firstPiston = false;
-			break;
-		case 'k':
-			pistonCombination.secondPiston = false;
-			break;
-		case 'l':
-			pistonCombination.thirdPiston = false;
-			break;
-		case 'a':
-			combinationValidated = false;
-			break;
-		}
-
-		
-	}
-	
 }

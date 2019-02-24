@@ -2,12 +2,12 @@ package pistons.solfege;
 
 import java.io.Serializable;
 
-public class Note  implements Serializable {
+public class Note implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6285980263992425660L;
-	public NoteAccidental accidental;
+	public NoteAccidental accidental = NoteAccidental.BECARRE;
 	public Pitch pitch;
 
 	public Note() {
@@ -19,8 +19,8 @@ public class Note  implements Serializable {
 		pitch = new Pitch(name, octaveNb);
 	}
 
-	public Note clone() {
-		Note note = new Note();
+	public NoteLearn clone() {
+		NoteLearn note = new NoteLearn();
 		note.accidental = accidental;
 		note.pitch.noteName = pitch.noteName;
 		note.pitch.octaveNb = pitch.octaveNb;
@@ -28,12 +28,10 @@ public class Note  implements Serializable {
 	}
 
 	public boolean equals(Note note) {
-		if(accidental.equals(note.accidental)
-				&& pitch.noteName.equals(note.pitch.noteName)
+		if (accidental.equals(note.accidental) && pitch.noteName.equals(note.pitch.noteName)
 				&& pitch.octaveNb == note.pitch.octaveNb) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -52,7 +50,7 @@ public class Note  implements Serializable {
 		String name = new String();
 		String acc = new String();
 		String ocNb = new String();
-		switch(pitch.noteName) {
+		switch (pitch.noteName) {
 		case DO:
 			name = "c";
 			break;
@@ -75,8 +73,8 @@ public class Note  implements Serializable {
 			name = "b";
 			break;
 		}
-		
-		switch(pitch.octaveNb) {
+
+		switch (pitch.octaveNb) {
 		case 2:
 			ocNb = "";
 			break;
@@ -87,8 +85,8 @@ public class Note  implements Serializable {
 			ocNb = "''";
 			break;
 		}
-		
-		switch(accidental) {
+
+		switch (accidental) {
 		case BEMOL:
 			acc = "es";
 			break;
@@ -102,5 +100,5 @@ public class Note  implements Serializable {
 
 		return name + acc + ocNb;
 	}
-	
+
 }

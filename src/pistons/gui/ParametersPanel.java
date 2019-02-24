@@ -1,7 +1,6 @@
 package pistons.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.GridLayout;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,11 +10,10 @@ import java.io.ObjectOutputStream;
 import java.util.Iterator;
 import java.util.Vector;
 
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
-import pistons.solfege.Note;
+import pistons.solfege.NoteLearn;
 import pistons.solfege.NoteSet;
 
 public class ParametersPanel extends JPanel {
@@ -25,56 +23,39 @@ public class ParametersPanel extends JPanel {
 	NoteSet selectedNotes;
 	NoteSet notes = new NoteSet();
 	Vector<JCheckBox> cbVector = new Vector<JCheckBox>();
-	JButton goBackButton = new JButton("Back");
-	boolean backRequested = false;
 
 	public ParametersPanel(NoteSet inputNoteSet) {
 		selectedNotes = inputNoteSet;
 		loadNotes();
 		notes.putAll();
 
-
-		for(Note note:notes) {
+		for (NoteLearn note : notes) {
 			JCheckBox cb = new JCheckBox(note.toString(), selectedNotes.contains(note));
 			add(cb);
 			cbVector.add(cb);
 		}
-
-		goBackButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent e)
-			{
-				backRequested = true;
-			}
-		});
-		add(goBackButton);
+		this.setLayout(new GridLayout(0, 4));
 	}
 
-	public boolean quitRequested() {
+	public void refreshAllowedNotes() {
 
-		if(backRequested) {
-			selectedNotes.clear();
-			int i = 0;
-			Iterator<JCheckBox> checkboxIt = cbVector.iterator();
-			while(checkboxIt.hasNext()) {
-				if(checkboxIt.next().isSelected()) {
-					selectedNotes.add(notes.get(i).clone());
-				}
-				i++;
+		selectedNotes.clear();
+		int i = 0;
+		Iterator<JCheckBox> checkboxIt = cbVector.iterator();
+		while (checkboxIt.hasNext()) {
+			if (checkboxIt.next().isSelected()) {
+				selectedNotes.add(notes.get(i).clone());
+				System.out.println(notes.get(i));
 			}
-			backRequested = false;
-
-			// Save
-			saveNotes();
-
-			return true;
+			i++;
 		}
-		else{
-			return false;
-		}
+		System.out.println();
+
+		// Save
+		saveNotes();
 	}
 
-	private void loadNotes(){
+	private void loadNotes() {
 		FileInputStream stream;
 		try {
 			stream = new FileInputStream("save.pistons");
@@ -111,6 +92,5 @@ public class ParametersPanel extends JPanel {
 			e.printStackTrace();
 		}
 	}
-
 
 }
