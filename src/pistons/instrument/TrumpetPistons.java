@@ -6,10 +6,9 @@ public class TrumpetPistons implements InstrumentPistons {
 
 	@Override
 	public boolean correctCombination(Note note, PistonCombination combi) {
-		
-		
-		if(!combi.firstPiston && !combi.secondPiston && !combi.thirdPiston) {
-			switch(note.toLilypond()) {
+
+		if (!combi.firstPiston && !combi.secondPiston && !combi.thirdPiston) {
+			switch (note.toLilypond()) {
 			case "c'":
 			case "g'":
 			case "c''":
@@ -22,8 +21,8 @@ public class TrumpetPistons implements InstrumentPistons {
 			}
 		}
 
-		if(combi.firstPiston && !combi.secondPiston && !combi.thirdPiston) {
-			switch(note.toLilypond()) {
+		if (combi.firstPiston && !combi.secondPiston && !combi.thirdPiston) {
+			switch (note.toLilypond()) {
 			case "bes":
 			case "ais":
 			case "f'":
@@ -39,8 +38,8 @@ public class TrumpetPistons implements InstrumentPistons {
 			}
 		}
 
-		if(!combi.firstPiston && combi.secondPiston && !combi.thirdPiston) {
-			switch(note.toLilypond()) {
+		if (!combi.firstPiston && combi.secondPiston && !combi.thirdPiston) {
+			switch (note.toLilypond()) {
 			case "b":
 			case "fis'":
 			case "ges'":
@@ -56,8 +55,8 @@ public class TrumpetPistons implements InstrumentPistons {
 			}
 		}
 
-		if(combi.firstPiston && combi.secondPiston && !combi.thirdPiston) {
-			switch(note.toLilypond()) {
+		if (combi.firstPiston && combi.secondPiston && !combi.thirdPiston) {
+			switch (note.toLilypond()) {
 			case "a":
 			case "e'":
 			case "a'":
@@ -70,8 +69,8 @@ public class TrumpetPistons implements InstrumentPistons {
 			}
 		}
 
-		if(combi.firstPiston && !combi.secondPiston && combi.thirdPiston) {
-			switch(note.toLilypond()) {
+		if (combi.firstPiston && !combi.secondPiston && combi.thirdPiston) {
+			switch (note.toLilypond()) {
 			case "g":
 			case "d'":
 				return true;
@@ -80,8 +79,8 @@ public class TrumpetPistons implements InstrumentPistons {
 			}
 		}
 
-		if(!combi.firstPiston && combi.secondPiston && combi.thirdPiston) {
-			switch(note.toLilypond()) {
+		if (!combi.firstPiston && combi.secondPiston && combi.thirdPiston) {
+			switch (note.toLilypond()) {
 			case "gis":
 			case "aes":
 			case "dis'":
@@ -96,8 +95,8 @@ public class TrumpetPistons implements InstrumentPistons {
 			}
 		}
 
-		if(combi.firstPiston && combi.secondPiston && combi.thirdPiston) {
-			switch(note.toLilypond()) {
+		if (combi.firstPiston && combi.secondPiston && combi.thirdPiston) {
+			switch (note.toLilypond()) {
 			case "fis":
 			case "ges":
 			case "cis'":
@@ -107,7 +106,7 @@ public class TrumpetPistons implements InstrumentPistons {
 				return false;
 			}
 		}
-		
+
 		return false;
 	}
 

@@ -6,7 +6,7 @@ public class NoteLearn extends Note {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final int RECORD_LENGTH = 10;
+	private static final int RECORD_LENGTH = 3;
 	private double[] responseDuration = new double[10];
 	private int iTry = 0;
 	private int idx = 0;
